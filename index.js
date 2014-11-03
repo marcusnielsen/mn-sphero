@@ -6,12 +6,12 @@ var spheroRobot = spheroRobotFactory.createSpheroRobot(
 
 var ball = spheroRobot.ball()
 var INTERVAL = 4000
-var MAX_MOVES = 5
+var MAX_MOVES = 2
 var SLOW_FACTOR = 4
 
 var movesCount = 0
 
-var randomWorkId = -1
+var randomWorkId
 
 var randomWork = function () {
   if(movesCount >= MAX_MOVES) {
@@ -20,6 +20,8 @@ var randomWork = function () {
     setInterval(fastRewind, INTERVAL)
   }
 
+  movesCount += 1
+
   ball.speed(Math.random() * ball.MAX_SPEED / SLOW_FACTOR)
   ball.orientation(Math.random() * ball.MAX_ORIENTATION)
 }
@@ -27,6 +29,8 @@ var randomWork = function () {
 randomWorkId = setInterval(randomWork, INTERVAL)
 
 var fastRewind = function () {
+  console.log('Reversing ball.')
+
   ball.reverse()
   ball._speed *= SLOW_FACTOR
 }
