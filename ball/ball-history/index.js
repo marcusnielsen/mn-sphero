@@ -14,9 +14,8 @@ BallHistory.prototype.add = function (ballCopy) {
     moment: moment()})
 }
 
-BallHistory.prototype.undo = function (ball) {
-  var ballCopy = this._historyCollection.pop()
-  ball.copy(ballCopy)
+BallHistory.prototype.undo = function () {
+  return this._historyCollection.pop()
 }
 
 module.exports = BallHistory

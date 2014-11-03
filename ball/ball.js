@@ -74,8 +74,10 @@ Ball.prototype.isSpeedValid = function () {
   return this._speed >= 0 && this._speed <= this.MAX_SPEED
 }
 
-Ball.prototype.return = function () {
-  this._history.undo(this)
+Ball.prototype.reverse = function () {
+  var ballCopy = this._history.undo()
+  ballCopy._orientation += 180
+  this.copy(ballCopy)
 }
 
 Ball.prototype.copy = function (ballCopy) {
