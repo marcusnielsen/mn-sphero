@@ -1,4 +1,4 @@
-// TODO: var moment = require('moment')
+var moment = require('moment')
 
 var BallHistory = function () {
   if(!(this instanceof BallHistory)) {
@@ -11,9 +11,7 @@ var BallHistory = function () {
 BallHistory.prototype.add = function (ballCopy) {
   this._historyCollection.push({
     ball: ballCopy,
-    // TODO: moment: moment()})
-    moment: new Date()
-  })
+    moment: moment()})
 }
 
 BallHistory.prototype.undo = function (ball) {

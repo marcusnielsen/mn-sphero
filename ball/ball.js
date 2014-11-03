@@ -1,5 +1,4 @@
-// TODO:
-//var BallHistory = require('./ball-history')
+var BallHistory = require('./ball-history')
 
 // bluetoothPort example: '/dev/tty.Sphero-GOG-AMP-SPP'.
 var Ball = function(bluetoothPort) {
@@ -21,9 +20,7 @@ var Ball = function(bluetoothPort) {
   this._speed = 0
   this._orientation = 0
 
-  // TODO: Factory?
-  // TODO: Call stack problem?
-  // this._history = new BallHistory()
+  this._history = new BallHistory()
 }
 
 Ball.prototype.MAX_SPEED = 100
@@ -43,7 +40,7 @@ Ball.prototype.orientation = function (orientation) {
   }
 
   this._orientation = Math.floor(orientation % this.MAX_ORIENTATION)
-  // TODO: this._history.add(this.copy())
+  this._history.add(this.copy())
 }
 
 Ball.prototype.position = function (position) {
@@ -56,7 +53,7 @@ Ball.prototype.position = function (position) {
     y: position.y || this.y
   }
 
-  // TODO: this._history.add(this.copy())
+  this._history.add(this.copy())
 }
 
 Ball.prototype.speed = function (speed) {
@@ -70,7 +67,7 @@ Ball.prototype.speed = function (speed) {
     throw new RangeError()
   }
 
-  // TODO: this._history.add(this.copy())
+  this._history.add(this.copy())
 }
 
 Ball.prototype.isSpeedValid = function () {
@@ -81,16 +78,15 @@ Ball.prototype.return = function () {
   this._history.undo(this)
 }
 
-// TODO:
-/*Ball.prototype.copy = function (ballCopy) {
+Ball.prototype.copy = function (ballCopy) {
   var from = arguments.length ? ballCopy : this
   var to = arguments.length ? this : new Ball(this.id())
 
-  to.speed(from.speed())
-  to.orientation(from.orientation())
-  to.position(from.position())
+  to._speed = from.speed()
+  to._orientation = from.orientation()
+  to._position = from.position()
 
   return to
-}*/
+}
 
 module.exports = Ball

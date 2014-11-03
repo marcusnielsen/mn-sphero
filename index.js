@@ -9,7 +9,7 @@ var INTERVAL = 3000
 
 var randomizedWork = function () {
   setInterval(function () {
-    ball.speed(Math.random() * ball.MAX_SPEED)
+    ball.speed(Math.random() * ball.MAX_SPEED / 4)
     ball.orientation(Math.random() * ball.MAX_ORIENTATION)
   }, INTERVAL)
 }
