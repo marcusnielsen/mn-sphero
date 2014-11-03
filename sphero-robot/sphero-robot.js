@@ -55,7 +55,8 @@ SpheroRobot.prototype._onReady = function () {
   this._robot.sphero.setRandomColor()
 
   // TODO: Find the best way or interval value.
-  setInterval(_.bind(this._work, this), 50)
+  // IDEA: Event based listening.
+  setInterval(_.bind(this._work, this), 2000)
 }
 
 SpheroRobot.prototype._work = function () {

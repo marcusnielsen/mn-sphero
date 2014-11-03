@@ -40,7 +40,6 @@ Ball.prototype.orientation = function (orientation) {
   }
 
   this._orientation = Math.floor(orientation % this.MAX_ORIENTATION)
-  this._history.add(this.copy())
 }
 
 Ball.prototype.position = function (position) {
@@ -52,8 +51,6 @@ Ball.prototype.position = function (position) {
     x: position.x || this.x,
     y: position.y || this.y
   }
-
-  this._history.add(this.copy())
 }
 
 Ball.prototype.speed = function (speed) {
@@ -66,18 +63,41 @@ Ball.prototype.speed = function (speed) {
   if(!this.isSpeedValid()) {
     throw new RangeError()
   }
-
-  this._history.add(this.copy())
 }
 
 Ball.prototype.isSpeedValid = function () {
   return this._speed >= 0 && this._speed <= this.MAX_SPEED
 }
 
+Ball.prototype.execute = function (milliseconds) {
+  this._history.add(this.copy(), milliseconds)
+
+  // TODO: Fire off event.
+}
+
 Ball.prototype.reverse = function () {
-  var ballCopy = this._history.undo()
-  ballCopy._orientation += 180
+  var historyItem = this._history.undo()
+
+  if(!historyItem) {
+    return false
+  }
+
+  var ballCopy = historyItem.ball
+
+  // TODO: Don't bypass the setter function when bypassing the history.
+  ballCopy._orientation = (ballCopy._orientation + 180) % 360
   this.copy(ballCopy)
+
+  return true
+}
+
+Ball.prototype.toString = function () {
+  var s = ''
+
+  s += 'Speed: ' + this.speed()
+  s += ', Orientation: ' + this.orientation()
+
+  return s
 }
 
 Ball.prototype.copy = function (ballCopy) {
@@ -87,6 +107,7 @@ Ball.prototype.copy = function (ballCopy) {
   to._speed = from.speed()
   to._orientation = from.orientation()
   to._position = from.position()
+  to._history = from._history //TODO: Implement getter
 
   return to
 }
