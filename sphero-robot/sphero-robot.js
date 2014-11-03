@@ -56,7 +56,7 @@ SpheroRobot.prototype._onReady = function () {
 
   // TODO: Find the best way or interval value.
   // IDEA: Event based listening.
-  setInterval(_.bind(this._work, this), 2000)
+  setInterval(_.bind(this._work, this), 50)
 }
 
 SpheroRobot.prototype._work = function () {

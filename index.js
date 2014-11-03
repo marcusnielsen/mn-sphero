@@ -39,8 +39,9 @@ var fastRewindWork = function () {
   {
     console.log('No more rolls to reverse.')
     clearInterval(fastRewindWorkId)
-    ball.speed(0)
-    ball.orientation(0)
+
+    movesCount = 0
+    randomWorkId = setInterval(randomWork, INTERVAL)
   }
   else {
     console.log('Reversing ball.')
